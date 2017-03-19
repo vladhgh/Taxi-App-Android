@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ToolBarStyle">
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="@dimen/padding_32"
+        android:paddingRight="@dimen/padding_32">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/padding_56"
+            android:animateLayoutChanges="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:baselineAligned="false">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        app:errorEnabled="true"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/padding_16"
+        >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_firstName_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:hint="@string/hint.firstName" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        app:errorEnabled="true"
+        android:orientation="horizontal">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_lastName_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:hint="@string/hint.lastName" />
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_phone_layout_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_phone_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textSize="14sp"
+                    android:hint="@string/hint.phone" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_department_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete"
+                    android:textSize="14sp"
+                    android:hint="@string/hint.department" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_email_layout_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_email_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp"
+                    android:hint="@string/hint.email" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_password_layout_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_password_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:inputType="textPassword"
+                    android:hint="@string/hint.password" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/button_register_reg"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom"
+                android:text="@string/button.register"
+                android:textColor="@color/yellow50"/>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+</RelativeLayout>

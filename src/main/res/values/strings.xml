@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">Taxi</string>
+
+    <string name="app.name">Такси "Таксовичкофф"</string>
+    <string name="hint.username">Имя пользователя</string>
+    <string name="hint.firstName">Имя</string>
+    <string name="hint.lastName">Фамилия</string>
+    <string name="hint.phone">Телефон</string>
+    <string name="hint.password">Пароль</string>
+    <string name="hint.email">Почта</string>
+    <string name="hint.department">Факультет</string>
+    <string name="button.login">Войти</string>
+    <string name="button.register">Зарегистрироваться</string>
+    <string name="text.welcome">Присоединяйтесь к нашему такси!</string>
+    <string name="error.username">Неправильно введено имя пользователя!</string>
+    <string name="error.phone">Номер телефона должен быть длинее</string>
+    <string name="error.password">Пароль должен быть больше 6 символов</string>
+    <string name="text.toRegister">Нет аккаунта? </string>
+    <string name="text.toLogin">Уже есть наш аккаунт? </string>
+
+    <string name="text.register.underline"><u>Зарегистрируйтесь!</u></string>
+    <string name="text.login.underline"><u>Войти</u></string>
+
+    <string name="text.privacy">Пользовательское соглашение</string>
+
 </resources>

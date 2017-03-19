@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#3F51B5</color>
-    <color name="color_primaryDark">#303F9F</color>
-    <color name="color_accent">#FF4081</color>
+
+    <color name="colorPrimary">@color/yellow600</color>
+    <color name="colorPrimaryDark">#FFA000</color>
+    <color name="colorAccent">#FF6F00</color>
+
+    <color name="yellow50">#FFF8E1</color>
+    <color name="yellow100">#FFECB3</color>
+    <color name="yellow200">#FFE082</color>
+    <color name="yellow300">#FFD54F</color>
+    <color name="yellow400">#FFCA28</color>
+    <color name="yellow500">#FFC107</color>
+    <color name="yellow600">#FFB300</color>
+    <color name="yellow700">#FFA000</color>
+    <color name="yellow800">#FF8F00</color>
+    <color name="yellow900">#FF6F00</color>
+
+
 </resources>
