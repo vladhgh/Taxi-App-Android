@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -23,11 +24,9 @@ class MainActivity: BasicActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Hawk.init(this).build()
-        if (!Hawk.contains("jsonwebtoken")) {
-
+        if (!Hawk.contains("jsonToken")) {
             setContentView(R.layout.activity_login)
             MaskFormatWatcher(MaskImpl.createTerminated(PredefinedSlots.RUS_PHONE_NUMBER)).installOn(this.input_phone)
-
             val input_phone_layout = this.input_phone_layout
             val input_phone = this.input_phone
             val button_login = this.button_login
@@ -58,9 +57,7 @@ class MainActivity: BasicActivity(), View.OnClickListener {
             this.input_password.addTextChangedListener(object : TextWatcher {
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-
-                }
+                override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (!isValidPassword(s.toString())) {
@@ -83,6 +80,9 @@ class MainActivity: BasicActivity(), View.OnClickListener {
                 false
             })
 
+        } else {
+            startActivity(Intent(this, MapsActivity::class.java))
+            finish()
         }
     }
 
@@ -90,9 +90,12 @@ class MainActivity: BasicActivity(), View.OnClickListener {
         when (v.id) {
             R.id.button_login -> {
                 this.input_password.clearFocus()
-                this.input_phone.clearFocus()
                 this.button_login.requestFocus()
-                showSnackBar("Sending data to database...")
+                if (isNetworkOnline()) {
+                    loginUser(input_phone.text.toString(), input_password.text.toString())
+                } else {
+                    showSnackBar(resources.getString(R.string.error_network))
+                }
             }
             R.id.text_register -> startActivity(Intent(this, RegisterActivity::class.java))
 
