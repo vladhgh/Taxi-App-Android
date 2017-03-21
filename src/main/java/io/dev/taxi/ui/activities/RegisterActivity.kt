@@ -99,6 +99,7 @@ class RegisterActivity: BasicActivity(), View.OnClickListener {
                     if (isValidInput(this.input_firstName_reg, this.input_firstName_layout_reg) &&
                             isValidInput(this.input_lastName_reg, this.input_lastName_layout_reg) &&
                             isValidInput(this.input_department_reg, this.input_department_layout_reg)) {
+                        showProgress()
                         registerUser(this.input_firstName_reg.text.toString(),
                                 this.input_lastName_reg.text.toString(),
                                 this.input_email_reg.text.toString(),

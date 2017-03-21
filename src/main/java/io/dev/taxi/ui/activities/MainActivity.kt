@@ -11,11 +11,16 @@ import android.widget.TextView
 
 import com.orhanobut.hawk.Hawk
 import io.dev.taxi.R
+import io.dev.taxi.ui.activities.TaxiActivity
 
 import kotlinx.android.synthetic.main.activity_login.*
 import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.slots.PredefinedSlots
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+import rx.Observable
+import rx.Subscriber
+
+
 
 
 class MainActivity: BasicActivity(), View.OnClickListener {
@@ -81,7 +86,7 @@ class MainActivity: BasicActivity(), View.OnClickListener {
             })
 
         } else {
-            startActivity(Intent(this, MapsActivity::class.java))
+            startActivity(Intent(this, TaxiActivity::class.java))
             finish()
         }
     }
@@ -92,6 +97,7 @@ class MainActivity: BasicActivity(), View.OnClickListener {
                 this.input_password.clearFocus()
                 this.button_login.requestFocus()
                 if (isNetworkOnline()) {
+                    showProgress()
                     loginUser(input_phone.text.toString(), input_password.text.toString())
                 } else {
                     showSnackBar(resources.getString(R.string.error_network))

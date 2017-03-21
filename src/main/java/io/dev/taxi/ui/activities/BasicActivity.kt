@@ -21,9 +21,11 @@ import okhttp3.Request
 
 import android.net.ConnectivityManager
 import android.support.design.widget.TextInputLayout
+import android.util.Log
 import com.auth0.android.jwt.JWT
-import java.util.*
-
+import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 abstract class BasicActivity : AppCompatActivity(){
 
@@ -44,68 +46,6 @@ abstract class BasicActivity : AppCompatActivity(){
         }
 
     }
-
-    fun loginUser(mobileNumber: String, password: String) {
-
-        val runnable = Runnable {
-            val formBody = FormBody.Builder()
-                    .add("mobileNumber", mobileNumber)
-                    .add("password", password)
-                    .build()
-            val req = Request.Builder()
-                    .url("http://192.168.1.183:8080/api/auth/login")
-                    .post(formBody)
-                    .build()
-            val res: String = client.newCall(req).execute().body().string()
-
-            val userObj = JsonParser().parse(res).asJsonObject
-
-            if (!userObj.isJsonNull && userObj.get("message").asString != "Authentication error") {
-                runOnUiThread {
-                    Hawk.put("jsonToken", userObj.get("token").asString)
-                    startActivity(Intent(this, MapsActivity::class.java))
-                    finish()
-                }
-            } else {
-                showSnackBar(resources.getString(R.string.error_userDontExist))
-            }
-        }
-        Thread(runnable).start()
-    }
-
-    fun registerUser(firstName: String, secondName: String, email: String, avatar: String, department: String, mobileNumber: String, password: String){
-        val runnable = Runnable {
-            val formBody = FormBody.Builder()
-                    .add("firstName", firstName)
-                    .add("secondName", secondName)
-                    .add("email", email)
-                    .add("avatar", avatar)
-                    .add("department", department)
-                    .add("mobileNumber", mobileNumber)
-                    .add("password", password)
-                    .build()
-            val req = Request.Builder()
-                    .url("http://192.168.1.183:8080/api/users/register")
-                    .post(formBody)
-                    .build()
-            val res: String = client.newCall(req).execute().body().string()
-
-            val jsonObj = JsonParser().parse(res).asJsonObject
-            if (!jsonObj.isJsonNull && jsonObj.get("message").asString != "Registration error") {
-                runOnUiThread {
-                    Hawk.put("jsonToken", jsonObj.get("token").asString)
-                    startActivity(Intent(this, MapsActivity::class.java))
-                    finish()
-                }
-            } else {
-                when (jsonObj.get("error").asString) {
-                    "User already registered" -> showSnackBar(resources.getString(R.string.error_userExist))
-                }
-            }
-        }
-        Thread(runnable).start()
-    }
-
     fun hideProgress() {
         if (mProgressDialog != null) {
             if(mProgressDialog!!.isShowing) {
@@ -113,6 +53,107 @@ abstract class BasicActivity : AppCompatActivity(){
             }
         }
     }
+
+    fun getUserTokenOnAuth(mobileNumber: String, password: String): Observable<String> {
+        return Observable.create {
+            subscriber ->
+                val formBody = FormBody.Builder()
+                        .add("mobileNumber", mobileNumber)
+                        .add("password", password)
+                        .build()
+                val req = Request.Builder()
+                        .url("http://192.168.1.183:8080/api/auth/login")
+                        .post(formBody)
+                        .build()
+                val res: String = client.newCall(req).execute().body().string()
+
+                val userObj = JsonParser().parse(res).asJsonObject
+
+                if (!userObj.isJsonNull && userObj.get("message").asString != "Authentication error") {
+                    subscriber.onNext(userObj.get("token").asString)
+                    subscriber.onCompleted()
+                } else {
+                    subscriber.onError(Throwable(userObj.get("message").asString))
+                }
+        }
+    }
+    fun loginUser(mobileNumber: String, password: String) {
+        getUserTokenOnAuth(mobileNumber, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { token ->
+                            Hawk.put("jsonToken", token)
+                            startActivity(Intent(this, TaxiActivity::class.java))
+                            hideProgress()
+                            finish()
+                        },
+                        { error ->
+                            Log.e("loginUser error:", error.toString())
+                            showSnackBar(resources.getString(R.string.error_userDontExist))
+                            hideProgress()
+                        }
+                )
+    }
+
+    fun getUserTokenOnReg(firstName: String, secondName: String, email: String, avatar: String, department: String,
+                          mobileNumber: String,
+                          password: String): Observable<String> {
+        return Observable.create {
+            subscriber ->
+                val formBody = FormBody.Builder()
+                        .add("firstName", firstName)
+                        .add("secondName", secondName)
+                        .add("email", email)
+                        .add("avatar", avatar)
+                        .add("department", department)
+                        .add("mobileNumber", mobileNumber)
+                        .add("password", password)
+                        .build()
+                val req = Request.Builder()
+                        .url("http://192.168.1.183:8080/api/users/register")
+                        .post(formBody)
+                        .build()
+                val res: String = client.newCall(req).execute().body().string()
+
+                val jsonObj = JsonParser().parse(res).asJsonObject
+                if (!jsonObj.isJsonNull && jsonObj.get("message").asString != "Registration error") {
+                    subscriber.onNext(jsonObj.get("token").asString)
+                    subscriber.onCompleted()
+                } else {
+                    when (jsonObj.get("error").asString) {
+                        "User already registered" -> subscriber.onError(Throwable(resources.getString(R.string.error_userExist)))
+                    }
+                }
+
+        }
+    }
+
+    fun registerUser(firstName: String,
+                     secondName: String,
+                     email: String,
+                     avatar: String,
+                     department: String,
+                     mobileNumber: String,
+                     password: String) {
+        getUserTokenOnReg(firstName, secondName, email, avatar, department, mobileNumber, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { token ->
+                            Hawk.put("jsonToken", token)
+                            startActivity(Intent(this, TaxiActivity::class.java))
+                            hideProgress()
+                            finish()
+                        },
+                        { error ->
+                            Log.e("registerUser error:", error.toString())
+                            showSnackBar(resources.getString(R.string.error_userExist))
+                            hideProgress()
+                        }
+                )
+    }
+
 
     fun setUpActionBarWithTitle(toolbar: android.support.v7.widget.Toolbar ,title: String = resources.getString(R.string.app_name)) {
         setSupportActionBar(toolbar)

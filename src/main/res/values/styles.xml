@@ -17,10 +17,14 @@
         <item name="actionMenuTextColor">@color/yellow50</item>
     </style>
 
-    <style name="custom_dialog" parent="Theme.AppCompat.Light">
-        <item name="android:fullDark">@android:color/transparent</item>
+    <style name="custom_dialog">
+        <item name="android:color">@color/colorAccent</item>
+        <item name="android:background">#80FFFFFF</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

@@ -31,9 +31,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
         <activity
-            android:name=".ui.activities.MapsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_maps"/>
+            android:name=".ui.activities.TaxiActivity"
+            android:label="@string/title_activity_taxi"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
