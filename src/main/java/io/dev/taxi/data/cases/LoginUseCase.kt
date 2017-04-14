@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.FormBody
 import okhttp3.Request
 
-open class LoginUseCase : UseCase<String, LoginUseCase.Parameters>(Schedulers.io()) {
+class LoginUseCase : UseCase<String, LoginUseCase.Parameters>(Schedulers.io()) {
     class Parameters(val mobileNumber: String, val password: String)
 
     override fun buildObservable(parameters: Parameters): Observable<String> {

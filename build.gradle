@@ -5,27 +5,12 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/ASL2.0'
-    }
     defaultConfig {
         applicationId "io.dev.taxi"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 }
 
@@ -34,17 +19,25 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
 
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.android.support:design:25.3.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.7'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'ru.tinkoff.decoro:decoro:1.3.2'
-    compile 'com.auth0.android:jwtdecode:1.1.0'
-    compile 'com.orhanobut:hawk:2.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.android.gms:play-services-maps:10.2.1'
+    compile "com.android.support:appcompat-v7:$androidSupportVersion"
+    compile "com.android.support:cardview-v7:$androidSupportVersion"
+    compile "com.android.support:recyclerview-v7:$androidSupportVersion"
+    compile "com.android.support:design:$androidSupportVersion"
+
+    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    compile "com.mikhaellopez:circularimageview:$circularImageViewVersion"
+
+    compile "ru.tinkoff.decoro:decoro:$decoroVersion"
+    compile "com.auth0.android:jwtdecode:$jwtDecodeVersion"
+    compile "com.orhanobut:hawk:$hawkVersion"
+    compile "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
+    compile "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
+    compile "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
+    compile "com.github.paolorotolo:appintro:4.1.0"
+    compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
 }
 repositories {
     mavenCentral()
 }
+apply plugin: 'com.google.gms.google-services'

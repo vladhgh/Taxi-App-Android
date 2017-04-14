@@ -5,7 +5,7 @@
     android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.dev.taxi.ui.activities.MainActivity"
+    tools:context="io.dev.taxi.activities.LoginActivity"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:animateLayoutChanges="true">
