@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import io.dev.taxi.R
 
-class FreeTripsFragment: Fragment() {
+class OrderFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        activity.title = "Бесплатные поездки"
-
-        return inflater!!.inflate(R.layout.fragment_free_trips, container, false)
+        return inflater!!.inflate(R.layout.fragment_order, container, false)
     }
 }

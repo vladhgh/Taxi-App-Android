@@ -12,6 +12,8 @@ import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.orhanobut.hawk.Hawk
 import io.dev.taxi.R
 import io.dev.taxi.presenters.LoginPresenter
@@ -29,6 +31,7 @@ class LoginActivity: AppCompatActivity(), View.OnClickListener, LoginContract.Vi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        animateInterface()
         this.button_login.isEnabled = false
         initPhoneMask()
         presenter.onPhoneChangedListener(this.input_phone)
@@ -56,8 +59,12 @@ class LoginActivity: AppCompatActivity(), View.OnClickListener, LoginContract.Vi
         shake(this.input_phone_layout)
     }
 
+    private fun animateInterface() {
+        YoYo.with(Techniques.FadeIn).duration(800).playOn(this.coordinator_layout)
+    }
+
     override fun shake(input: TextInputLayout) {
-        input.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
+        YoYo.with(Techniques.Shake).duration(500).playOn(input)
     }
 
     override fun onPhoneValidationSuccess() {

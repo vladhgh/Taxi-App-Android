@@ -14,6 +14,9 @@ import io.dev.taxi.activities.TaxiActivity
 
 class PaymentFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        activity.title = "Оплата"
+
+
         val inflatedView = inflater!!.inflate(R.layout.fragment_payment, container, false)
         inflatedView.button_pay.setOnClickListener {
             FirebaseMessaging.getInstance().subscribeToTopic("news")

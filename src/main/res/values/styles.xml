@@ -22,6 +22,30 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
+    <style name="MenuLabelsStyle">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="MenuButtonsStyle">
+        <item name="fab_size">normal</item>
+        <item name="fab_showAnimation">@anim/jump_from_down</item>
+        <item name="fab_hideAnimation">@anim/jump_to_down</item>
+        <item name="fab_shadowColor">#444</item>
+        <item name="fab_colorNormal">#FFB805</item>
+        <item name="fab_colorPressed">#F2AB00</item>
+        <item name="fab_colorRipple">#D99200</item>
+    </style>
+
+    <style name="MenuButtonsStyle.Yellow">
+        <item name="fab_colorNormal">@color/colorPrimary</item>
+        <item name="fab_colorPressed">@color/colorPrimaryDark</item>
+        <item name="fab_colorRipple">@color/colorAccent</item>
+    </style>
+
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">@color/yellow50</item>
         <item name="android:textColorSecondary">@color/yellow50</item>
@@ -31,6 +55,11 @@
     <style name="custom_dialog">
         <item name="android:color">@color/colorAccent</item>
         <item name="android:background">#80FFFFFF</item>
+    </style>
+
+    <style name="custom_dialog_no_background">
+        <item name="android:color">@color/colorAccent</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

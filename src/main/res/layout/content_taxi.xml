@@ -2,16 +2,18 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/taxi_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="io.dev.taxi.activities.TaxiActivity"
     tools:showIn="@layout/app_bar_taxi">
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"

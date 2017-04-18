@@ -22,11 +22,20 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.slots.PredefinedSlots
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 import android.widget.ArrayAdapter
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import android.util.Base64
+import android.util.Log
+import com.bumptech.glide.Glide
+import java.io.ByteArrayOutputStream
+import java.io.File
+
 
 class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, View.OnClickListener {
 
     val presenter = RegistrationPresenter(this)
     var mProgressDialog: ProgressDialog? = null
+    var base64Image: String = "avatar"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +75,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, Vie
                         this.spinner_role.selectedItem.toString(),
                         this.input_email_reg.text.toString(),
                         this.spinner_department.selectedItem.toString(),
-                        "avatar",
+                        base64Image,
                         this.input_password_reg.text.toString())
             }
             R.id.image_upload -> {
@@ -94,7 +103,17 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, Vie
             val imageStream = contentResolver.openInputStream(selectedImageUri)
             val selectedImage = BitmapFactory.decodeStream(imageStream)
             this.image_upload.setImageBitmap(selectedImage)
+            base64Image = BitMapToString(selectedImage)
         }
+    }
+
+    fun BitMapToString(bitmap: Bitmap): String {
+        System.gc()
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos)
+        val b = baos.toByteArray()
+        val temp = Base64.encodeToString(b, Base64.DEFAULT)
+        return temp
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

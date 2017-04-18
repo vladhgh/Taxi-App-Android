@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/drawer"
+    android:backgroundTintMode="screen"
+    android:backgroundTint="@android:color/black"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -24,11 +26,13 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Name of user"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/email"
+        android:text="Passanger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

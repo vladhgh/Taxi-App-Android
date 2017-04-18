@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,12 +23,62 @@
 
     <include layout="@layout/content_taxi" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="@dimen/padding_72"
+        android:layout_gravity="end"
+        style="@style/MenuButtonsStyle.Yellow"
+        android:src="@drawable/ic_my_location_white_24dp" />
 
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_zoomIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-28dp"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_gravity="center|end"
+        style="@style/MenuButtonsStyle.Yellow"
+        android:src="@drawable/fab_add" />
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_zoomOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/padding_16"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center|end"
+        style="@style/MenuButtonsStyle.Yellow"
+        android:src="@drawable/ic_remove_white_24dp" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab"
+        android:layout_width="196dp"
+        android:layout_height="227dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/padding_16"
+        fab:menu_icon="@drawable/ic_local_taxi_white_24dp"
+        fab:menu_animationDelayPerItem="0"
+        fab:menu_colorNormal="@color/colorPrimary"
+        fab:menu_colorPressed="@color/colorPrimaryDark"
+        fab:menu_colorRipple="@color/colorAccent"
+        app:menu_labels_style="@style/MenuLabelsStyle">
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MenuButtonsStyle.Yellow"
+            android:src="@drawable/ic_home_white_24dp"
+            fab:fab_label="Домой" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MenuButtonsStyle.Yellow"
+            android:src="@drawable/ic_work_white_24dp"
+            fab:fab_label="На работу" />
+    </com.github.clans.fab.FloatingActionMenu>
 </android.support.design.widget.CoordinatorLayout>
