@@ -162,10 +162,14 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
         }
     }
 
-    override fun onRegister(mobileNumber: String, name: String, role: String, email: String, department: String, avatar: String, password: String) {
+    override fun onRegister(mobileNumber: String, name: String, role: String, email: String, department: String, avatar: String, carModel: String?, carNumber: String?, password: String) {
         if (view.isNetworkOnline()) {
             view.showProgress()
-            registrationUseCase.execute(createRegistrationObserver(), RegistrationUseCase.Parameters(mobileNumber, name, role, email, department, avatar, password))
+            if (carModel != null && carNumber != null) {
+                registrationUseCase.execute(createRegistrationObserver(), RegistrationUseCase.Parameters(mobileNumber, name, role, email, department, avatar, carModel, carModel, password))
+            } else {
+                registrationUseCase.execute(createRegistrationObserver(), RegistrationUseCase.Parameters(mobileNumber, name, role, email, department, avatar, null, null, password))
+            }
         } else {
             view.onRegistrationFailed("Отсутствует соединение с сетью")
         }

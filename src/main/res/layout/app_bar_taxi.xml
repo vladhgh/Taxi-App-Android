@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/padding_16"
-        android:layout_marginTop="@dimen/padding_72"
+        android:layout_marginTop="92dp"
         android:layout_gravity="end"
         style="@style/MenuButtonsStyle.Yellow"
         android:src="@drawable/ic_my_location_white_24dp" />

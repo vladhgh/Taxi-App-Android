@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/parent_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.TaxiActivity">
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/floating_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:floatingSearch_dismissOnOutsideTouch="true"
+            app:floatingSearch_leftActionMode="showHamburger"
+            app:floatingSearch_searchBarMarginLeft="@dimen/padding_8"
+            app:floatingSearch_searchBarMarginRight="@dimen/padding_8"
+            app:floatingSearch_searchBarMarginTop="@dimen/padding_8"
+            app:floatingSearch_searchHint="Куда поедем, друг?"
+            app:floatingSearch_showSearchKey="true"
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            app:floatingSearch_dimBackground="false"
+            app:floatingSearch_close_search_on_keyboard_dismiss="false"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/results_view"
+            android:layout_marginLeft="@dimen/padding_16"
+            android:layout_marginRight="@dimen/padding_16"
+            android:layout_marginTop="@dimen/padding_72"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/cardview_default_radius"
+            app:cardElevation="@dimen/cardview_default_elevation">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/search_results_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.CardView>
+</RelativeLayout>

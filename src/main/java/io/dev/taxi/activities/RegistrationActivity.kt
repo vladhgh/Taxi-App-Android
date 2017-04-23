@@ -24,9 +24,15 @@ import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 import android.widget.ArrayAdapter
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.support.design.widget.TextInputLayout
 import android.util.Base64
 import android.util.Log
+import android.widget.AdapterView
+import android.widget.EditText
 import com.bumptech.glide.Glide
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
+import kotlinx.android.synthetic.main.nav_header_taxi.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -62,7 +68,27 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, Vie
         this.spinner_department.adapter = adapterDep
         this.spinner_department.setSelection(0)
         this.spinner_role.adapter = adapter
+        this.spinner_role.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(arg0: AdapterView<*>, v: View, position: Int, id: Long) {
+                when (spinner_role.selectedItem.toString()) {
+                    "Водитель" -> {
+                        input_carModel_layout_reg.visibility = View.VISIBLE
+                        input_carNumber_layout_reg.visibility = View.VISIBLE
+                    }
+                    "Пассажир" -> {
+                        input_carModel_layout_reg.visibility = View.GONE
+                        input_carNumber_layout_reg.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>) {
+                Log.v("routes", "nothing selected")
+            }
+        }
         this.spinner_role.setSelection(1)
+
+
     }
 
     override fun onClick(v: View?) {
@@ -70,13 +96,27 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, Vie
             R.id.button_register_reg -> {
                 this.input_password_reg.clearFocus()
                 this.button_register_reg.requestFocus()
-                presenter.onRegister(this.input_phone_reg.text.toString(),
-                        this.input_name_reg.text.toString(),
-                        this.spinner_role.selectedItem.toString(),
-                        this.input_email_reg.text.toString(),
-                        this.spinner_department.selectedItem.toString(),
-                        base64Image,
-                        this.input_password_reg.text.toString())
+                if(this.spinner_role.selectedItem == "Водитель") {
+                    presenter.onRegister(this.input_phone_reg.text.toString(),
+                            this.input_name_reg.text.toString(),
+                            this.spinner_role.selectedItem.toString(),
+                            this.input_email_reg.text.toString(),
+                            this.spinner_department.selectedItem.toString(),
+                            base64Image,
+                            this.input_carModel_reg.text.toString(),
+                            this.input_carNumber_reg.text.toString(),
+                            this.input_password_reg.text.toString())
+                } else {
+                    presenter.onRegister(this.input_phone_reg.text.toString(),
+                            this.input_name_reg.text.toString(),
+                            this.spinner_role.selectedItem.toString(),
+                            this.input_email_reg.text.toString(),
+                            this.spinner_department.selectedItem.toString(),
+                            base64Image,
+                            null,
+                            null,
+                            this.input_password_reg.text.toString())
+                }
             }
             R.id.image_upload -> {
                 openGallery(1)
@@ -183,15 +223,19 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, Vie
     override fun onValidationFailure(input: String, message: String) {
         when (input) {
             "phone" -> {
+                shake(this.input_phone_layout_reg)
                 this.input_phone_layout_reg.error = resources.getString(R.string.error_userExist)
             }
             "password" -> {
+                shake(this.input_password_layout_reg)
                 this.input_password_layout_reg.error = resources.getString(R.string.error_password)
             }
             "email" -> {
+                shake(this.input_email_layout_reg)
                 this.input_email_layout_reg.error = resources.getString(R.string.error_email)
             }
             "name" -> {
+                shake(this.input_name_layout_reg)
                 this.input_name_layout_reg.error = resources.getString(R.string.error_empty)
             }
         }
@@ -203,6 +247,10 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View, Vie
 
     override fun disableButton() {
         this.button_register_reg.isEnabled = false
+    }
+
+    override fun shake(input: TextInputLayout) {
+        YoYo.with(Techniques.Shake).duration(500).playOn(input)
     }
 
     override fun onRegistrationSuccess(result: String) {

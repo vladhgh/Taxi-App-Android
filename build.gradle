@@ -33,6 +33,8 @@ dependencies {
     compile "com.auth0.android:jwtdecode:$jwtDecodeVersion"
     compile "com.orhanobut:hawk:$hawkVersion"
     compile "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-places:10.2.1"
+    compile 'com.google.maps.android:android-maps-utils:0.5'
     compile "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
     compile "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
     compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
@@ -40,9 +42,9 @@ dependencies {
 
     compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-compat:25.1.1'
+    compile 'com.github.arimorty:floatingsearchview:2.0.4'
+    compile 'com.android.support:support-compat:25.3.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:19.1.0'
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.2@aar'
 }

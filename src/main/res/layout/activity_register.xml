@@ -102,6 +102,7 @@
                         android:id="@+id/input_carModel_layout_reg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:errorEnabled="true">
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_carModel_reg"
@@ -110,6 +111,21 @@
                             android:inputType="textEmailAddress"
                             android:textSize="14sp"
                             android:hint="Модель машины" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_carNumber_layout_reg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:errorEnabled="true">
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/input_carNumber_reg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:textSize="14sp"
+                            android:hint="Номер машины" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout

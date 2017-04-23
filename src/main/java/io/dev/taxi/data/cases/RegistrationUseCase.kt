@@ -11,12 +11,14 @@ class RegistrationUseCase : UseCase<String, RegistrationUseCase.Parameters>(Sche
     class Parameters(val mobileNumber: String, val name: String, val role: String, val email: String,
                      val department: String,
                      val avatar: String,
+                     val carModel: String?,
+                     val carNumber: String?,
                      val password: String)
 
     override fun buildObservable(parameters: Parameters): Observable<String> {
         return Observable.create {
             subscriber ->
-            val formBody = FormBody.Builder()
+            var formBody = FormBody.Builder()
                     .add("name", parameters.name)
                     .add("role", parameters.role)
                     .add("avatar", parameters.avatar)
@@ -25,6 +27,19 @@ class RegistrationUseCase : UseCase<String, RegistrationUseCase.Parameters>(Sche
                     .add("mobileNumber", parameters.mobileNumber)
                     .add("password", parameters.password)
                     .build()
+            if (parameters.carModel != null && parameters.carNumber != null) {
+                formBody = FormBody.Builder()
+                        .add("name", parameters.name)
+                        .add("role", parameters.role)
+                        .add("avatar", parameters.avatar)
+                        .add("email", parameters.email)
+                        .add("department", parameters.department)
+                        .add("mobileNumber", parameters.mobileNumber)
+                        .add("password", parameters.password)
+                        .add("carModel", parameters.carModel)
+                        .add("carNumber", parameters.carNumber)
+                        .build()
+            }
             val req = Request.Builder()
                     .url(AppConfig.BASE_URL + "users/register")
                     .post(formBody)

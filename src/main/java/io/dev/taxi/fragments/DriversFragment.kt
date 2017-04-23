@@ -1,11 +1,11 @@
 package io.dev.taxi.fragments
 
 import android.app.Fragment
+import android.content.ActivityNotFoundException
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,89 +16,67 @@ import io.dev.taxi.activities.TaxiActivity
 import io.dev.taxi.presenters.TaxiPresenter
 import io.dev.taxi.presenters.contracts.TaxiContract
 import kotlinx.android.synthetic.main.fragment_drivers.view.*
-import android.support.v7.widget.CardView
 import android.util.Base64
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
+import android.widget.Button
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import io.dev.taxi.adapters.DriversAdapter
+import io.dev.taxi.data.models.Driver
+
 
 class DriversFragment: Fragment(), TaxiContract.DriversView {
 
-    var driversList = ArrayList<DriversFragment.Driver>()
-    var parentActivity: TaxiActivity? = null
-    var presenter: TaxiPresenter? = null
-    var currentView: View? = null
-    private var adapter: DriversFragment.DriversAdapter? = null
+    private var driversList = ArrayList<Driver>()
+    private lateinit var parentActivity: TaxiActivity
+    private lateinit var presenter: TaxiPresenter
+    private lateinit var currentView: View
+    private lateinit var adapter: DriversAdapter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         activity.title = "Водители"
         parentActivity = activity as TaxiActivity
-        presenter = TaxiPresenter(parentActivity!!, this)
+        presenter = TaxiPresenter(parentActivity, this, TripsFragment())
         currentView = inflater!!.inflate(R.layout.fragment_drivers, container, false)
-        presenter!!.loadDrivers(true)
+        presenter.loadDrivers(true)
         adapter = DriversAdapter(driversList)
-        currentView!!.recycler.adapter = adapter
-        currentView!!.recycler.layoutManager = LinearLayoutManager(activity)
-        currentView!!.drivers_pullToRefresh.setOnRefreshListener {
-            presenter!!.loadDrivers(false)
-        }
-        return currentView!!
-    }
-    private class DriversAdapter(driversList: List<Driver>) : RecyclerView.Adapter<DriversAdapter.DriversViewHolder>() {
-
-        private var mDriversList: List<Driver> = driversList
-
-        fun setItems(drivers: List<Driver>) {
-            this.mDriversList = drivers
-        }
-
-        override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DriversViewHolder {
-            val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.driver_item, viewGroup, false)
-            return DriversViewHolder(v)
-        }
-
-
-        override fun onBindViewHolder(viewHolder: DriversViewHolder, i: Int) {
-            YoYo.with(Techniques.FadeInDown).duration(300).playOn(viewHolder.cardView)
-            val driver = mDriversList[i]
-            viewHolder.driverName!!.text = driver.name
-            viewHolder.driverCar!!.text = driver.carModel
-            if (driver.avatar != "avatar") {
-                val image_data = Base64.decode(driver.avatar, Base64.NO_WRAP)
-                val options = BitmapFactory.Options()
-                options.outHeight = 128
-                options.outWidth = 128
-                options.outMimeType = "image/jpeg"
-                viewHolder.driverImage!!.setImageBitmap(BitmapFactory.decodeByteArray(image_data, 0, image_data.size, options))
+        currentView.recycler.adapter = adapter
+        adapter.setItemsOnClickListener(object: DriversAdapter.OnItemClickListener {
+            override fun onMessageClick(driver: Driver) {
+                val phone = driver.mobileNumber
+                phone.replace("(", "")
+                phone.replace(")","")
+                phone.replace(" ", "")
+                val uri = Uri.parse("smsto:$phone")
+                val it = Intent(Intent.ACTION_SENDTO, uri)
+                it.putExtra("sms_body", "Здравствуй, друг!")
+                try {
+                    startActivity(it)
+                } catch (error: ActivityNotFoundException) {
+                    Toast.makeText(activity, "Упс", Toast.LENGTH_LONG).show()
+                }
             }
-        }
-
-        override fun getItemCount() = mDriversList.count()
-
-
-        class DriversViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-            var driverImage: CircularImageView? = null
-            var driverName: TextView? = null
-            var driverCar: TextView? = null
-            var cardView: CardView? = null
-
-            init {
-                driverImage = itemView.findViewById(R.id.driver_image) as CircularImageView
-                driverName = itemView.findViewById(R.id.driver_name) as TextView
-                driverCar = itemView.findViewById(R.id.driver_car) as TextView
-                cardView = itemView.findViewById(R.id.driver_cardView) as CardView
+            override fun onPhoneClick(driver: Driver) {
+                val intent = Intent(Intent.ACTION_DIAL)
+                val phone = driver.mobileNumber
+                phone.replace("(", "")
+                phone.replace(")","")
+                phone.replace(" ", "")
+                intent.data = Uri.parse("tel:$phone")
+                startActivity(intent)
             }
-
-
+        })
+        currentView.recycler.layoutManager = LinearLayoutManager(activity)
+        currentView.drivers_pullToRefresh.setOnRefreshListener {
+            presenter.loadDrivers(false)
         }
-
+        return currentView
     }
-    class Driver(val name: String, val avatar: String, val carModel: String, val carNumber: String, val mobileNumber: String, val email: String)
 
     override fun onDriversLoadSuccess(drivers: ArrayList<Driver>) {
-        parentActivity!!.hideProgress()
-        adapter!!.setItems(drivers)
-        adapter!!.notifyDataSetChanged()
-        currentView!!.drivers_pullToRefresh.isRefreshing = false
+        parentActivity.hideProgress()
+        adapter.setItems(drivers)
+        adapter.notifyDataSetChanged()
+        currentView.drivers_pullToRefresh.isRefreshing = false
     }
 }

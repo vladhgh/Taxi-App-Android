@@ -1,6 +1,5 @@
 <resources>
-
-    <string name="app.name">Таксовичков"</string>
+    <string name="application">Таксовичков</string>
     <string name="hint.username">Имя пользователя</string>
     <string name="hint.name">Имя</string>
     <string name="hint.phone">Телефон</string>
@@ -25,13 +24,7 @@
     <string name="text.login.underline"><u>Войти</u></string>
 
     <string name="text.privacy">Пользовательское соглашение</string>
-    <string name="title_activity_maps">Map</string>
-
     <string name="action.exit">Выход</string>
-
-    <string name="navigation_view_category_1">Navigation View Category</string>
-    <string name="navigation_view_category_2">Navigation View Category</string>
-    <string name="title_activity_taxi">Таксовичков</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -44,6 +37,4 @@
     <string name="navigation_drawer_trips">Мои поездки</string>
     <string name="navigation_drawer_free_trips">Бесплатные поездки</string>
     <string name="navigation_drawer_help">Помощь</string>
-
-
 </resources>

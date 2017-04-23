@@ -1,17 +1,18 @@
 package io.dev.taxi.data.cases
 
 import com.google.gson.JsonParser
+import io.dev.taxi.data.models.Driver
 import io.dev.taxi.fragments.DriversFragment
 import io.dev.taxi.utils.AppConfig
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Request
 
-class DriversUseCase : UseCase<ArrayList<DriversFragment.Driver>, DriversUseCase.Parameters>(Schedulers.io()) {
+class DriversUseCase : UseCase<ArrayList<Driver>, DriversUseCase.Parameters>(Schedulers.io()) {
     class Parameters
 
-    override fun buildObservable(parameters: Parameters): Observable<ArrayList<DriversFragment.Driver>> {
-        val driversList = ArrayList<DriversFragment.Driver>()
+    override fun buildObservable(parameters: Parameters): Observable<ArrayList<Driver>> {
+        val driversList = ArrayList<Driver>()
         return Observable.create {
             subscriber ->
             val req = Request.Builder()
@@ -24,7 +25,7 @@ class DriversUseCase : UseCase<ArrayList<DriversFragment.Driver>, DriversUseCase
 
             driversArray
                     .map { it.asJsonObject }
-                    .forEach { driversList.add(DriversFragment.Driver(it.get("name").asString, it.get("avatar").asString, it.get("carModel").asString,
+                    .forEach { driversList.add(Driver(it.get("name").asString, it.get("avatar").asString, it.get("carModel").asString,
                             it.get("carNumber").asString, it.get("mobileNumber").asString,
                             it.get("email").asString))
                     }

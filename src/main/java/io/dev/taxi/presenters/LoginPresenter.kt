@@ -30,7 +30,8 @@ class LoginPresenter(val view: LoginContract.View) : LoginContract.Presenter {
                 view.onLoginSuccess(token)
             }
             override fun onError(e: Throwable) {
-                view.showSnackBar("Отсутствует соединение с сервером")
+                view.hideProgress()
+                view.showSnackBar("Друг, видимо ты ввел неверный пароль")
             }
             override fun onComplete() {}
         }
