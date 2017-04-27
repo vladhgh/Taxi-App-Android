@@ -6,12 +6,14 @@ import android.util.Log
 import android.widget.EditText
 import io.dev.taxi.data.cases.RegistrationUseCase
 import io.dev.taxi.data.cases.ValidationUseCase
+import io.dev.taxi.observables.EditTextObservable
 import io.dev.taxi.presenters.contracts.RegistrationContract
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.subjects.PublishSubject
+import org.reactivestreams.Subscriber
 import java.util.concurrent.TimeUnit
 
 class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationContract.Presenter {
@@ -58,18 +60,6 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
             }
         }
     }
-    private fun editTextObservable(input: EditText): Observable<String> {
-        val subject = PublishSubject.create<String>()
-        input.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                subject.onNext(s.toString())
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-        return subject
-    }
 
     private fun validatePassword(password: String) {
         if (password.length < 6) {
@@ -107,7 +97,7 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
 
 
     override fun onPhoneChangedListener(input: EditText) {
-        editTextObservable(input)
+        EditTextObservable().from(input)
                 .doOnNext { view.onValidationSuccess("phone") }
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .filter { data -> return@filter !data.isEmpty() && data.length == 18 }
@@ -116,7 +106,7 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
     }
 
     override fun onPasswordChangedListener(input: EditText) {
-        editTextObservable(input)
+        EditTextObservable().from(input)
                 .doOnNext { view.onValidationSuccess("password") }
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .filter { data -> return@filter !data.isEmpty() }
@@ -125,7 +115,7 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
                 .subscribe()
     }
     override fun onEmailChangedListener(input: EditText) {
-        editTextObservable(input)
+        EditTextObservable().from(input)
                 .doOnNext { view.onValidationSuccess("email") }
                 .debounce(1200, TimeUnit.MILLISECONDS)
                 .filter { data -> return@filter !data.isEmpty() }
@@ -134,7 +124,7 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
                 .subscribe()
     }
     override fun onNameChangedListener(input: EditText) {
-        editTextObservable(input)
+        EditTextObservable().from(input)
                 .doOnNext { view.onValidationSuccess("name") }
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .filter { data -> return@filter !data.isEmpty() }
@@ -144,10 +134,10 @@ class RegistrationPresenter(val view: RegistrationContract.View) : RegistrationC
     }
     override fun validateCredentials(inputPhone: EditText, inputPassword: EditText, inputEmail: EditText, inputName: EditText) {
         Observable.combineLatest(
-                editTextObservable(inputPhone),
-                editTextObservable(inputPassword),
-                editTextObservable(inputEmail),
-                editTextObservable(inputName),
+                EditTextObservable().from(inputPhone),
+                EditTextObservable().from(inputPassword),
+                EditTextObservable().from(inputEmail),
+                EditTextObservable().from(inputName),
                 Function4 {
                     phone: String, password: String, email: String, name: String ->
                         return@Function4 isValidInputs(password)

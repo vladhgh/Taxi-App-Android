@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:elevation="4dp"
             android:theme="@style/ToolBarStyle">
         </android.support.v7.widget.Toolbar>
         <ScrollView
@@ -47,7 +46,7 @@
                             app:civ_border_color="@color/colorPrimary"
                             app:civ_border_width="0dp"
                             android:layout_marginRight="@dimen/padding_16"
-                            android:src="@drawable/profile"/>
+                            android:src="@drawable/image_profile"/>
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_name_layout_reg"
                             android:layout_width="0dp"

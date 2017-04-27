@@ -65,9 +65,6 @@ class TaxiPresenter(val view: TaxiContract.View, val driversView: TaxiContract.D
 
     override fun loadTrips(userId: String, showProgress: Boolean) {
         if (view.isNetworkOnline()) {
-            if (showProgress) {
-                view.showProgress()
-            }
             tripsUseCase.execute(createTripsObserver(), TripsUseCase.Parameters(userId))
         } else {
             view.showSnackBar("Отсутствует соединение с сетью")

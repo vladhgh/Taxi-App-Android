@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/padding_8"
             android:tint="#777"
@@ -27,13 +27,6 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 tools:text="76 Lenina Street" />
-
-            <TextView
-                android:id="@+id/distance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_8"
-                tools:text="5 minutes from you" />
         </LinearLayout>
     </LinearLayout>
 

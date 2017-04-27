@@ -38,7 +38,7 @@ class TripsFragment: Fragment(), TaxiContract.TripsView {
     }
 
     override fun onTripsLoadSuccess(trips: ArrayList<Trip>) {
-        parentActivity.hideProgress()
+        currentView.progress.visibility = View.GONE
         adapter.setItems(trips)
         adapter.notifyDataSetChanged()
         currentView.trips_pullToRefresh.isRefreshing = false

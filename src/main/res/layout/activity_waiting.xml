@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:padding="@dimen/padding_32"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="false">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Waiting"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:padding="@dimen/padding_8"
+        android:text="Спасибо за ваш заказ, мы рады работать для вас!"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top|center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="@dimen/padding_8"
+            android:src="@drawable/ic_baby"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="@dimen/padding_8"
+            android:textAlignment="center"
+            android:text="Ожидайте, такси будет у вас через 5 минут ;)"/>
+
+        <Button
+            android:id="@+id/done"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/padding_16"
+            android:textColorHint="@color/yellow50"
+            android:hint="Продолжить"/>
+    </LinearLayout>
 </LinearLayout>

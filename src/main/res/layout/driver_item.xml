@@ -24,7 +24,7 @@
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="0dp"
                 android:layout_margin="@dimen/padding_16"
-                android:src="@drawable/profile"/>
+                android:src="@drawable/image_profile"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="42"
@@ -51,26 +51,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_8"
+            android:paddingRight="@dimen/padding_8"
             android:orientation="horizontal">
             <Button
                 android:id="@+id/driver_call"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableTint="@color/yellow900"
-                android:drawableLeft="@drawable/ic_phone_black_24dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="end"
+                android:drawableLeft="@drawable/ic_phone"
                 style="?android:attr/buttonBarButtonStyle"
+                android:textColor="#231f20"
                 android:textAllCaps="false"
                 android:text="Позвонить"/>
+
             <Button
                 android:id="@+id/driver_message"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableTint="@color/yellow900"
-                android:drawableLeft="@drawable/ic_message_black_24dp"
+                android:drawableLeft="@drawable/ic_sms"
                 android:layout_gravity="end"
+                android:textColor="#231f20"
                 style="?android:attr/buttonBarButtonStyle"
                 android:textAllCaps="false"
                 android:text="Сообщение"/>

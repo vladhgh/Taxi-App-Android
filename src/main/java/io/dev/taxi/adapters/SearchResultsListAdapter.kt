@@ -20,7 +20,6 @@ class SearchResultsListAdapter: RecyclerView.Adapter<SearchResultsListAdapter.Vi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val addressSuggestion: Address = mDataSet[position]
         holder.mAddress.text = addressSuggestion.address
-        holder.mDistance.text = addressSuggestion.distance
 
         if(mLastAnimatedItemPosition < position){
             animateItem(holder.itemView)
@@ -47,7 +46,6 @@ class SearchResultsListAdapter: RecyclerView.Adapter<SearchResultsListAdapter.Vi
     }
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var mAddress: TextView = itemView.findViewById(R.id.address) as TextView
-        var mDistance: TextView = itemView.findViewById(R.id.distance) as TextView
     }
 
     fun swapData(mNewDataSet: List<Address>) {
@@ -74,4 +72,4 @@ class SearchResultsListAdapter: RecyclerView.Adapter<SearchResultsListAdapter.Vi
     }
 }
 
-class Address(val address: String, val distance: String, val placeId: String?)
+class Address(val address: String, val placeId: String?)

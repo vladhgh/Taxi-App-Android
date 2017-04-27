@@ -16,7 +16,6 @@ class OrderFragment: Fragment(), View.OnClickListener {
     private lateinit var mParentActivity: TaxiActivity
     private lateinit var presenter: TaxiPresenter
 
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mParentActivity = activity as TaxiActivity
         presenter = TaxiPresenter(mParentActivity, DriversFragment(), TripsFragment())
@@ -27,8 +26,12 @@ class OrderFragment: Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         view.order_cancel.setOnClickListener(this)
         view.order_button.setOnClickListener(this)
+        view.edit_from.isEnabled = false
+        view.edit_to.isEnabled = false
         val bundleArgs = this.arguments
         if (bundleArgs != null) {
+            view.edit_from.hint = bundleArgs.getString("departure")
+            view.edit_to.hint = bundleArgs.getString("destination")
             view.order_price.text = "Цена поездки: " + bundleArgs.getDouble("price").toInt().toString() + "RUB"
         }
     }
@@ -44,7 +47,6 @@ class OrderFragment: Fragment(), View.OnClickListener {
                         mParentActivity.tripModel.userId,
                         mParentActivity.tripModel.driverId,
                         mParentActivity.tripModel.cost)
-                Toast.makeText(activity, "Поехали, друг :)", Toast.LENGTH_LONG).show()
             }
         }
     }

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -147,16 +148,15 @@ class SearchFragment: Fragment(), GoogleApiClient.OnConnectionFailedListener {
     }
     private fun doQuery(query: String): ArrayList<Address> {
         val predictionList = ArrayList<Address>()
-        val typeFilter = AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                .build()
-        val result: PendingResult<AutocompletePredictionBuffer> = Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, query, mLatLngBounds, typeFilter)
+        val result: PendingResult<AutocompletePredictionBuffer> = Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, query, mLatLngBounds, null)
         val autocompletePredictions: AutocompletePredictionBuffer = result.await()
         if (autocompletePredictions.status.isSuccess) {
             val iterator = autocompletePredictions.iterator()
             while (iterator.hasNext()) {
                 val prediction: AutocompletePrediction = iterator.next()
-                predictionList.add(Address(prediction.getFullText(StyleSpan(Typeface.BOLD)).toString(), "5 минут до этого места, друг", prediction.placeId))
+                if (prediction.getFullText(StyleSpan(Typeface.BOLD)).toString().contains("Челябинск")) {
+                    predictionList.add(Address(prediction.getFullText(StyleSpan(Typeface.BOLD)).toString(), prediction.placeId))
+                }
             }
         }
         autocompletePredictions.release()

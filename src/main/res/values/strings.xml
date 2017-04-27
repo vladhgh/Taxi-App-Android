@@ -1,5 +1,7 @@
 <resources>
     <string name="application">Таксовичков</string>
+    <string name="intro.skip">Пропустить</string>
+    <string name="intro.done">Готово</string>
     <string name="hint.username">Имя пользователя</string>
     <string name="hint.name">Имя</string>
     <string name="hint.phone">Телефон</string>

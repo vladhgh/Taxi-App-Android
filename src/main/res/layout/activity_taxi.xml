@@ -19,8 +19,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemTextColor="@drawable/nav_item"
-        app:itemBackground="@android:color/transparent"
+        app:itemBackground="@drawable/drawer_list_selector"
+        app:itemTextColor="@drawable/nav_item_text_color"
         app:headerLayout="@layout/nav_header_taxi"
         app:menu="@menu/activity_taxi_drawer" />
 

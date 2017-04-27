@@ -1,13 +1,16 @@
 package io.dev.taxi.adapters
 
+import android.app.Activity
 import android.graphics.BitmapFactory
 import android.support.v7.widget.RecyclerView
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.TextView
+import com.arlib.floatingsearchview.util.Util
 import com.mikhaellopez.circularimageview.CircularImageView
 import io.dev.taxi.R
 import io.dev.taxi.data.models.Driver
@@ -16,6 +19,7 @@ import io.dev.taxi.fragments.DriversFragment
 class DriversAdapter(driversList: List<Driver>) : RecyclerView.Adapter<DriversAdapter.DriversViewHolder>() {
 
     private var mDriversList: List<Driver> = driversList
+    private var mLastAnimatedItemPosition = -1
     private lateinit var mItemsOnClickListener: OnItemClickListener
 
     fun setItems(drivers: List<Driver>) {
@@ -40,6 +44,10 @@ class DriversAdapter(driversList: List<Driver>) : RecyclerView.Adapter<DriversAd
             options.outMimeType = "image/jpeg"
             holder.driverImage.setImageBitmap(BitmapFactory.decodeByteArray(image_data, 0, image_data.size, options))
         }
+        if(mLastAnimatedItemPosition < i){
+            animateItem(holder.itemView, 700)
+            mLastAnimatedItemPosition = i
+        }
         holder.callButton.setOnClickListener{
             mItemsOnClickListener.onPhoneClick(mDriversList[i])
         }
@@ -57,6 +65,16 @@ class DriversAdapter(driversList: List<Driver>) : RecyclerView.Adapter<DriversAd
 
     fun setItemsOnClickListener(onClickListener: OnItemClickListener){
         mItemsOnClickListener = onClickListener
+    }
+
+    fun animateItem(view: View, delay: Long) {
+        view.translationY = Util.getScreenHeight(view.context as Activity).toFloat()
+        view.animate()
+                .translationY(0f)
+                .setInterpolator(DecelerateInterpolator(3f))
+                .setDuration(700)
+                .setStartDelay(delay)
+                .start()
     }
 
 

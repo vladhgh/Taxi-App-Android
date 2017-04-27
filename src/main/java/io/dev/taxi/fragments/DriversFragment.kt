@@ -21,8 +21,10 @@ import android.widget.Button
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import com.orhanobut.hawk.Hawk
 import io.dev.taxi.adapters.DriversAdapter
 import io.dev.taxi.data.models.Driver
+import kotlinx.android.synthetic.main.fragment_drivers.*
 
 
 class DriversFragment: Fragment(), TaxiContract.DriversView {
@@ -38,7 +40,6 @@ class DriversFragment: Fragment(), TaxiContract.DriversView {
         parentActivity = activity as TaxiActivity
         presenter = TaxiPresenter(parentActivity, this, TripsFragment())
         currentView = inflater!!.inflate(R.layout.fragment_drivers, container, false)
-        presenter.loadDrivers(true)
         adapter = DriversAdapter(driversList)
         currentView.recycler.adapter = adapter
         adapter.setItemsOnClickListener(object: DriversAdapter.OnItemClickListener {
@@ -67,14 +68,24 @@ class DriversFragment: Fragment(), TaxiContract.DriversView {
             }
         })
         currentView.recycler.layoutManager = LinearLayoutManager(activity)
+        presenter.loadDrivers(false)
         currentView.drivers_pullToRefresh.setOnRefreshListener {
             presenter.loadDrivers(false)
+        }
+        if (Hawk.get("isDriverTutorialNotPassed") ?: true) {
+            currentView.drivers_tutorial_button.setOnClickListener {
+                Hawk.put("isDriverTutorialNotPassed", false)
+                currentView.drivers_tutorial.visibility = View.GONE
+            }
+
+        } else {
+            currentView.drivers_tutorial.visibility = View.GONE
         }
         return currentView
     }
 
     override fun onDriversLoadSuccess(drivers: ArrayList<Driver>) {
-        parentActivity.hideProgress()
+        currentView.progress.visibility = View.GONE
         adapter.setItems(drivers)
         adapter.notifyDataSetChanged()
         currentView.drivers_pullToRefresh.isRefreshing = false

@@ -59,6 +59,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class TaxiActivity : AppCompatActivity(), TaxiContract.View, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, LocationListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -80,6 +81,7 @@ class TaxiActivity : AppCompatActivity(), TaxiContract.View, View.OnClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_taxi)
         initUserInterface()
+        this.nav_view.itemIconTintList = null
         if (savedInstanceState == null) {
             val item = this.nav_view.menu.getItem(0).setChecked(true)
             onNavigationItemSelected(item)
@@ -175,9 +177,6 @@ class TaxiActivity : AppCompatActivity(), TaxiContract.View, View.OnClickListene
             }
             R.id.nav_payment -> {
                 fragmentManager.beginTransaction().replace(R.id.content, PaymentFragment()).commit()
-            }
-            R.id.nav_settings -> {
-                fragmentManager.beginTransaction().replace(R.id.content, SettingsFragment()).commit()
             }
             R.id.nav_drivers -> {
                 fragmentManager.beginTransaction().replace(R.id.content, DriversFragment()).commit()
@@ -411,7 +410,7 @@ class TaxiActivity : AppCompatActivity(), TaxiContract.View, View.OnClickListene
 
                 lineOptions.addAll(mPolylinePoints)
                 lineOptions.width(12f)
-                lineOptions.color(resources.getColor(R.color.yellow500))
+                lineOptions.color(resources.getColor(R.color.pink))
                 lineOptions.geodesic(true)
             }
             mGoogleMap.addPolyline(lineOptions)
@@ -482,34 +481,56 @@ class TaxiActivity : AppCompatActivity(), TaxiContract.View, View.OnClickListene
         }
         mGoogleMap.clear()
         stopLocationUpdates()
+
+
         val myLocation = mGoogleMap.myLocation
         val destinationLocation = Location("Место назначения")
         destinationLocation.latitude = location.latitude
         destinationLocation.longitude = location.longitude
+
         val distance = myLocation.distanceTo(destinationLocation)
+
         val price = 49 + (12.5 * (distance / 1000.0))
         tripModel.cost = price.toInt().toString()
-        val addresses = Geocoder(this, Locale.getDefault()).getFromLocation(myLocation.latitude, myLocation.longitude, 1)
-        tripModel.departure = addresses[0].getAddressLine(0)
+
+        tripModel.departure = getAddress(LatLng(myLocation.latitude, myLocation.longitude))
+        tripModel.destination = getAddress(LatLng(location.latitude, location.longitude))
+
         markerPoints.add(LatLng(myLocation.latitude, myLocation.longitude))
         val firstMarker = mGoogleMap.addMarker(MarkerOptions().position(LatLng(myLocation.latitude, myLocation.longitude)).title("Вы"))
         markerPoints.add(location)
         val secondMarker = mGoogleMap.addMarker(MarkerOptions().position(location).title("Место назначения"))
+
         val url = getDirectionsUrl(markerPoints[0], markerPoints[1])
         val downloadTask = DownloadTask()
         downloadTask.execute(url)
+
         val markers = arrayOf(firstMarker, secondMarker)
         val b: LatLngBounds.Builder = LatLngBounds.Builder()
         for (m: Marker in markers) {
             b.include(m.position)
         }
         val bounds: LatLngBounds = b.build()
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50))
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+
         val bundle = Bundle()
         bundle.putDouble("price", price)
+        bundle.putString("departure", tripModel.departure)
+        bundle.putString("destination", tripModel.destination)
         val fragment = OrderFragment()
         fragment.arguments = bundle
         fragmentManager.beginTransaction().add(R.id.map, fragment, "Order").commit()
+    }
+
+    fun getAddress(location: LatLng): String {
+        var addresses: List<Address> = ArrayList()
+        try {
+            addresses = Geocoder(this, Locale("ru", "RU")).getFromLocation(location.latitude, location.longitude, 1)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Ошибка", Toast.LENGTH_SHORT).show()
+        }
+        return addresses[0].getAddressLine(0) ?: "Stuck"
     }
 
     private fun zoomMap(zoom: Float) {
@@ -520,6 +541,7 @@ class TaxiActivity : AppCompatActivity(), TaxiContract.View, View.OnClickListene
     }
 
     override fun onOrderSuccess(isSuccess: Boolean) {
+        this.onBackPressed()
         startActivity(Intent(this, WaitingForOrderActivity::class.java))
     }
 

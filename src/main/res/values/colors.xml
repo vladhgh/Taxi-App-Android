@@ -5,6 +5,12 @@
     <color name="colorPrimaryDark">#FFA000</color>
     <color name="colorAccent">#FF6F00</color>
 
+
+    <color name="grey">#999999</color>
+    <color name="dark_grey">#444444</color>
+
+    <color name="pink">#ED655F</color>
+
     <color name="yellow50">#FFF8E1</color>
     <color name="yellow100">#FFECB3</color>
     <color name="yellow200">#FFE082</color>

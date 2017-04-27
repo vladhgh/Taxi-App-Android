@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/padding_16"
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/car"/>
+            android:src="@drawable/ic_red_car_order"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,22 +35,45 @@
                 android:layout_gravity="start|center"
                 android:textStyle="bold"
                 android:layout_marginBottom="@dimen/padding_16"
-                android:text="Price: 500&#8381;"/>
-            <TextView
-                android:id="@+id/from"
+                android:text="Цена за поездку: 500&#8381;"/>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:textAlignment="textStart"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_16"
-                android:layout_gravity="start"
-                android:text="From: 110 Geroyev Tankograda street"/>
-            <TextView
-                android:id="@+id/to"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/padding_16"
+                    android:text="Откуда: "/>
+                <EditText
+                    android:id="@+id/edit_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:hint="110 Героев танкограда улица"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:textAlignment="textStart"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="To: 44 Agalakova street"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/padding_16"
+                    android:text="Куда: "/>
+                <EditText
+                    android:id="@+id/edit_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:hint="44 Агалакова улица"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
