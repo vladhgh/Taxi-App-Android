@@ -1,3 +1,42 @@
 <resources>
-    <string name="app_name">Taxi</string>
+    <string name="application">Таксовичков</string>
+    <string name="intro.skip">Пропустить</string>
+    <string name="intro.done">Готово</string>
+    <string name="hint.username">Имя пользователя</string>
+    <string name="hint.name">Имя</string>
+    <string name="hint.phone">Телефон</string>
+    <string name="hint.password">Пароль</string>
+    <string name="hint.email">Почта</string>
+    <string name="hint.department">Факультет</string>
+    <string name="button.login">Войти</string>
+    <string name="button.register">Зарегистрироваться</string>
+    <string name="text.welcome">Присоединяйтесь к нашему такси!</string>
+    <string name="error.username">Неправильно введено имя пользователя!</string>
+    <string name="error.phone">Неверно введен номер телефона</string>
+    <string name="error.email">Неверно введена почта</string>
+    <string name="error.empty">Заполните поле</string>
+    <string name="error.userExist">Пользователь уже существует</string>
+    <string name="error.userDontExist">Пользователя не существует</string>
+    <string name="error.network">Остутствует соединение с сетью</string>
+    <string name="error.password">Пароль должен быть больше 6 символов</string>
+    <string name="text.toRegister">Нет аккаунта? </string>
+    <string name="text.toLogin">Уже есть наш аккаунт? </string>
+
+    <string name="text.register.underline"><u>Зарегистрируйтесь!</u></string>
+    <string name="text.login.underline"><u>Войти</u></string>
+
+    <string name="text.privacy">Пользовательское соглашение</string>
+    <string name="action.exit">Выход</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="navigation_drawer_map">Карта</string>
+    <string name="navigation_drawer_drivers">Водители</string>
+    <string name="navigation_drawer_settings">Настройки</string>
+    <string name="navigation_drawer_exit">Выход</string>
+    <string name="navigation_drawer_payment">Оплата</string>
+    <string name="navigation_drawer_trips">Мои поездки</string>
+    <string name="navigation_drawer_free_trips">Бесплатные поездки</string>
+    <string name="navigation_drawer_help">Помощь</string>
 </resources>

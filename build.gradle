@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
@@ -10,26 +11,44 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.2.0'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+
+    compile "com.android.support:appcompat-v7:$androidSupportVersion"
+    compile "com.android.support:cardview-v7:$androidSupportVersion"
+    compile "com.android.support:recyclerview-v7:$androidSupportVersion"
+    compile "com.android.support:design:$androidSupportVersion"
+
+    compile "com.github.clans:fab:$fabVersion"
+
+    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    compile "com.mikhaellopez:circularimageview:$circularImageViewVersion"
+
+    compile "ru.tinkoff.decoro:decoro:$decoroVersion"
+    compile "com.auth0.android:jwtdecode:$jwtDecodeVersion"
+    compile "com.orhanobut:hawk:$hawkVersion"
+    compile "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-places:10.2.1"
+    compile 'com.google.maps.android:android-maps-utils:0.5'
+    compile "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
+    compile "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
+    compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+
+    compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'com.github.arimorty:floatingsearchview:2.0.4'
+    compile 'com.android.support:support-compat:25.3.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.2@aar'
 }
 repositories {
     mavenCentral()
 }
+apply plugin: 'com.google.gms.google-services'

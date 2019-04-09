@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_intro_map"
+            android:title="@string/navigation_drawer_map" />
+        <item
+            android:id="@+id/nav_drivers"
+            android:icon="@drawable/ic_driver"
+            android:title="@string/navigation_drawer_drivers" />
+        <item
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/ic_intro_wallet"
+            android:title="@string/navigation_drawer_payment" />
+        <item
+            android:id="@+id/nav_trips"
+            android:icon="@drawable/ic_red_car_order"
+            android:title="@string/navigation_drawer_trips" />
+        <item
+            android:id="@+id/nav_free_trips"
+            android:icon="@drawable/ic_star"
+            android:title="@string/navigation_drawer_free_trips" />
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/navigation_drawer_exit" />
+    </group>
+
+</menu>
